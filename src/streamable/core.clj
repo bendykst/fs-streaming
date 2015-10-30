@@ -97,9 +97,9 @@
 (defn -main
   [& args]
   (let [results (->> (get-episodes)
-                     (map assoc-media-id)
+                     (map throttled-id)
                      (filter identity)
-                     (map assoc-streaming-options)
+                     (map throttled-options)
                      (remove (comp empty? :streaming-options)))]
     (pprint results)
     (println "----------------")
