@@ -2,7 +2,8 @@
   (:require [feedparser-clj.core :as feedparser]
             [clojure.pprint :refer :all]
             [cheshire.core :as json]
-            [clj-http.client :as http])
+            [clj-http.client :as http]
+            [throttler.core :refer [throttle-fn]])
   (:gen-class))
 
 (defn sanitize-title [title]
@@ -65,12 +66,41 @@
     (assoc
       ep
       :streaming-options
-      (->> resp :body vals (map :friendlyName)))))
+      (->> resp :body vals (map :friendlyName) set))))
+
+(def throttled-id (throttle-fn assoc-media-id 1 :second))
+(def throttled-options (throttle-fn assoc-streaming-options 1 :second))
+
+(defn format-results [eps]
+  (let [streaming-sites (->> eps
+                             (mapcat :streaming-options)
+                             set
+                             (sort-by #(if (= % "Netflix Instant") "AAA" %)))]
+    (apply str
+      (flatten
+        (list
+          "Episode"
+          (for [service streaming-sites] (str " | " service))
+          "\n:---"
+          (for [_ streaming-sites] "|:---:")
+          "\n"
+          (for [ep eps]
+            (list
+              (:title ep)
+              (for [site streaming-sites]
+                (if
+                  ((:streaming-options ep) site)
+                  "|✓"
+                  "|"))
+              "\n")))))))
 
 (defn -main
   [& args]
-  (->> (get-episodes)
-       second
-       assoc-media-id
-       assoc-streaming-options
-       pprint))
+  (let [results (->> (get-episodes)
+                     (map assoc-media-id)
+                     (filter identity)
+                     (map assoc-streaming-options)
+                     (remove (comp empty? :streaming-options)))]
+    (pprint results)
+    (println "----------------")
+    (print (format-results results))))

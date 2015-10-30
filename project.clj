@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [adamwynne/feedparser-clj "0.5.2"]
                  [cheshire "5.5.0"]
-                 [clj-http "2.0.0"]]
+                 [clj-http "2.0.0"]
+                 [throttler "1.0.0"]]
   :main ^:skip-aot streamable.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
