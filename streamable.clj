@@ -1,16 +1,40 @@
-(ns streamable.core
-  (:require [feedparser-clj.core :as feedparser]
-            [clojure.pprint :refer :all]
-            [cheshire.core :as json]
-            [clj-http.client :as http]
-            [throttler.core :refer [throttle-fn]])
-  (:gen-class))
+(require 'leiningen.exec)
+(leiningen.exec/deps '[[org.clojure/clojure "1.7.0"]
+                       [korma "0.4.2"]
+                       [org.xerial/sqlite-jdbc "3.8.11.2"]
+                       [adamwynne/feedparser-clj "0.5.2"]
+                       [clj-http "2.0.0"]
+                       [throttler "1.0.0"]])
+
+(require '[feedparser-clj.core :as feedparser]
+         '[korma.db :as kdb]
+         '[korma.core :as kcore]
+         '[clojure.java.io :as io]
+         '[clojure.pprint :refer :all]
+         '[clj-http.client :as http]
+         '[throttler.core :refer [throttle-fn]])
+
+(def sqll (kdb/sqlite3 {:db "movies.db"}))
+(kdb/defdb db sqll)
+(kcore/defentity movies)
+
+(def episode-ids
+  (reduce
+    (fn [ids record]
+      (assoc
+        ids
+        (:episode_id record)
+        {:imdb (:imdb_id record)
+         :rt (:rt_id record)}))
+    {}
+    (kcore/select movies)))
 
 (defn sanitize-title [title]
   (-> title
       (clojure.string/replace #"(?i:at nerdtacular \d+)" "")
-      (clojure.string/replace #"(?i:\(LIVE\))" "")
       (clojure.string/replace #"(?i:live (watch|sack|viewing)( of)?)" "")
+      (clojure.string/replace #"(?:\(?LIVE\)?)" "")
+      (clojure.string/replace #"(?:NEWER)" "")
       (clojure.string/replace #"(?i:commentary track( edition)?)" "")
       (clojure.string/replace #"(?i:(: )?bonus sack:?)" "")
       (clojure.string/replace #"(?i:the one about)" "")
@@ -32,9 +56,9 @@
     (when parsed
       (assoc
         ep
-        :episode (when
-                   (not= (second parsed) "")
-                   (Integer. (second parsed)))
+        :episode-id (when
+                      (not= (second parsed) "")
+                      (Integer. (second parsed)))
         :media-title (sanitize-title (last parsed))))))
 
 (defn get-episodes []
@@ -44,18 +68,34 @@
        (map #(select-keys % [:title :pubDate]))
        (keep parse-title)))
 
+(defn extract-imdb-id [movie-data]
+  (when-let
+    [url (-> movie-data :links :imdb)]
+    (last
+      (clojure.string/split url #"/"))))
+
 (defn assoc-media-id [ep]
+  (println "Getting id for" (:media-title ep))
   (let [resp (http/get
                "http://www.canistream.it/services/search"
                {:query-params {:movieName (:media-title ep)}
                 :accept :json
-                :as :json})]
-    (assoc
-      ep
-      :media-id
-      (->> resp :body first :_id))))
+                :as :json})
+        imdb-id (-> ep :episode-id episode-ids :imdb)]
+    (if-let [matching-result (when
+                               imdb-id
+                               (first
+                                 (filter
+                                   #(= imdb-id (extract-imdb-id %))
+                                   (:body resp))))]
+      (assoc
+        ep
+        :media-id
+        (:_id matching-result))
+      (println "*** No match found for" (:title ep) "***"))))
 
 (defn assoc-streaming-options [ep]
+  (println "Getting options for" (:media-title ep))
   (let [resp (http/get
                "http://www.canistream.it/services/query"
                {:query-params {:movieId (:media-id ep)
@@ -94,13 +134,10 @@
                   "|"))
               "\n")))))))
 
-(defn -main
-  [& args]
-  (let [results (->> (get-episodes)
-                     (map throttled-id)
-                     (filter identity)
-                     (map throttled-options)
-                     (remove (comp empty? :streaming-options)))]
-    (pprint results)
-    (println "----------------")
-    (print (format-results results))))
+(let [results (->> (get-episodes)
+                   (map throttled-id)
+                   (filter identity)
+                   (map throttled-options)
+                   (remove (comp empty? :streaming-options)))]
+  (println "----------------")
+  (print (format-results results)))
