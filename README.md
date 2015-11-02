@@ -3,7 +3,7 @@ This script generates a table of streaming Film Sack movies in Reddit's Markdown
 ## Setup
 
 Create an SQLite database called `movies.db` from the supplied `movies.sql`
-file. This database contains the IMDB and Rotten Tomatoes ids of each episode's
+file. This database contains the IMDB, Rotten Tomatoes and CISI ids of each episode's
 film.
 
 ## Usage
