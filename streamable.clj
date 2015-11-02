@@ -18,7 +18,7 @@
 (kdb/defdb db sqll)
 (kcore/defentity movies)
 
-(def episode-ids
+(def movie-ids
   (reduce
     (fn [ids record]
       (assoc
@@ -99,15 +99,15 @@
 (def throttled-id (throttle-fn get-cisi-id 1 :second))
 
 (defn assoc-cisi-id [ep]
-  (let [ep-ids (-> ep :episode-id episode-ids)]
+  (let [ids (-> ep :episode-id movie-ids)]
     (cond
-      (:cisi ep-ids) (assoc ep :cisi-id (:cisi ep-ids))
-      (:imdb ep-ids) (throttled-id ep (:imdb ep-ids))
-      ep-ids (println "*** No IMDB ID found for" (:title ep) "***")
+      (:cisi ids) (assoc ep :cisi-id (:cisi ids))
+      (:imdb ids) (throttled-id ep (:imdb ids))
+      ids (println "*** No IMDB ID found for" (:title ep) "***")
       (:episode-id ep) (do
                          (kcore/insert movies
                            (kcore/values {:episode_id (:episode-id ep)
-                                          :title (:title ep)}))
+                                          :title (:media-title ep)}))
                          (println "Adding empty entry for" (:title ep)))
       :else (println "Skipping" (:title ep)))))
 
@@ -156,4 +156,4 @@
                    (map throttled-options)
                    (remove (comp empty? :streaming-options)))]
   (println "----------------")
-  (print (format-results results)))
+  (print (format-results (reverse results))))
