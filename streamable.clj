@@ -25,6 +25,7 @@
         ids
         (:episode_id record)
         {:imdb (:imdb_id record)
+         :cisi (:cisi_id record)
          :rt (:rt_id record)}))
     {}
     (kcore/select movies)))
@@ -74,31 +75,47 @@
     (last
       (clojure.string/split url #"/"))))
 
-(defn assoc-media-id [ep]
-  (println "Getting id for" (:media-title ep))
+(defn get-cisi-id [ep imdb-id]
+  (println "Attempting to add CISI id for" (:title ep))
   (let [resp (http/get
                "http://www.canistream.it/services/search"
                {:query-params {:movieName (:media-title ep)}
                 :accept :json
-                :as :json})
-        imdb-id (-> ep :episode-id episode-ids :imdb)]
-    (if-let [matching-result (when
-                               imdb-id
-                               (first
-                                 (filter
-                                   #(= imdb-id (extract-imdb-id %))
-                                   (:body resp))))]
-      (assoc
-        ep
-        :media-id
-        (:_id matching-result))
-      (println "*** No match found for" (:title ep) "***"))))
+                :as :json})]
+    (if-let [matching-result (first
+                               (filter
+                                 #(= imdb-id (extract-imdb-id %))
+                                 (:body resp)))]
+      (do
+        (kcore/update movies
+          (kcore/set-fields {:cisi_id (:_id matching-result)})
+          (kcore/where {:episode_id (:episode-id ep)}))
+        (assoc
+          ep
+          :cisi-id
+          (:_id matching-result)))
+      (println "*** No CISI ID found for" (:title ep) "***"))))
+
+(def throttled-id (throttle-fn get-cisi-id 1 :second))
+
+(defn assoc-cisi-id [ep]
+  (let [ep-ids (-> ep :episode-id episode-ids)]
+    (cond
+      (:cisi ep-ids) (assoc ep :cisi-id (:cisi ep-ids))
+      (:imdb ep-ids) (throttled-id ep (:imdb ep-ids))
+      ep-ids (println "*** No IMDB ID found for" (:title ep) "***")
+      (:episode-id ep) (do
+                         (kcore/insert movies
+                           (kcore/values {:episode_id (:episode-id ep)
+                                          :title (:title ep)}))
+                         (println "Adding empty entry for" (:title ep)))
+      :else (println "Skipping" (:title ep)))))
 
 (defn assoc-streaming-options [ep]
   (println "Getting options for" (:media-title ep))
   (let [resp (http/get
                "http://www.canistream.it/services/query"
-               {:query-params {:movieId (:media-id ep)
+               {:query-params {:movieId (:cisi-id ep)
                                :attributes true
                                :mediaType "streaming"}
                 :accept :json
@@ -108,7 +125,6 @@
       :streaming-options
       (->> resp :body vals (map :friendlyName) set))))
 
-(def throttled-id (throttle-fn assoc-media-id 1 :second))
 (def throttled-options (throttle-fn assoc-streaming-options 1 :second))
 
 (defn format-results [eps]
@@ -135,7 +151,7 @@
               "\n")))))))
 
 (let [results (->> (get-episodes)
-                   (map throttled-id)
+                   (map assoc-cisi-id)
                    (filter identity)
                    (map throttled-options)
                    (remove (comp empty? :streaming-options)))]
