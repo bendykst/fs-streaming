@@ -28,10 +28,12 @@
                                :mediaType "streaming"}
                 :accept :json
                 :as :json})]
-    (assoc
-      ep
-      :streaming_options
-      (->> resp :body vals (map :friendlyName) set))))
+    (->> resp
+         :body
+         vals
+         (map :friendlyName)
+         set
+         (assoc ep :streaming_options))))
 
 (def throttled-options (throttle-fn assoc-streaming-options 1 :second))
 

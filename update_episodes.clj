@@ -21,7 +21,6 @@
 (def sqll (kdb/sqlite3 {:db "episodes.db"}))
 (kdb/defdb db sqll)
 (kcore/defentity episodes)
-(kcore/defentity ignored)
 
 (def rt-api-key (env :rt-api-key))
 
@@ -87,14 +86,17 @@
   (println (str "  [" (+ 2 (count options)) "] Ignore Forever")))
 
 (defn get-cisi-from-imdb [imdb-id]
-  (let [url (str "http://www.canistream.it/external/imdb/" imdb-id "?l=default")
-        resource (html/html-resource (URL. url))
-        cisi-id (-> resource
-                    (html/select [:div.search-result])
-                    first
-                    :attrs
-                    :rel)]
-    cisi-id))
+  (let [url (str
+              "http://www.canistream.it/external/imdb/"
+              imdb-id
+              "?l=default")]
+    (-> url
+        URL.
+        html/html-resource
+        (html/select [:div.search-result])
+        first
+        :attrs
+        :rel)))
 
 (defn find-ids [{:keys [media_title episode_id episode_title] :as ep}]
   (let [resp (http/get
@@ -121,7 +123,7 @@
         (= choice (count options)) nil
         (= choice (inc (count options)))
           (do
-            (print "Enter a search term:")
+            (print "Enter a search term: ")
             (flush)
             (recur (assoc ep :media_title (read-line))))
         (= choice (+ 2 (count options)))
@@ -148,20 +150,17 @@
                          (remove
                            #(episode-exists? (Integer. (:episode_id %)))))
         movie-ids (doall (map find-ids missing-eps))]
-    (dorun
-      (map
-        (fn [ep ids]
-          (when ids
-            (kcore/insert episodes
-              (kcore/values
-                (select-keys
-                  (merge ep ids)
-                  [:media_title
-                   :imdb_id
-                   :rt_id
-                   :cisi_id
-                   :episode_title
-                   :episode_id])))))
-        missing-eps movie-ids))))
+    (doseq [[ep ids] (map list missing-eps movie-ids)]
+      (when ids
+        (kcore/insert episodes
+          (kcore/values
+            (select-keys
+              (merge ep ids)
+              [:media_title
+               :imdb_id
+               :rt_id
+               :cisi_id
+               :episode_title
+               :episode_id])))))))
 
 (update-database)
