@@ -98,6 +98,19 @@
         :attrs
         :rel)))
 
+(defn get-netflix-from-cisi [cisi-id]
+  (let [resp (http/get
+               "http://www.canistream.it/services/query"
+               {:query-params {:movieId cisi-id
+                               :attributes true
+                               :mediaType "dvd"}
+                :accept :json
+                :as :json})]
+    (some-> resp
+            :body
+            :netflix_dvd
+            :external_id)))
+
 (defn find-ids [{:keys [media_title episode_id episode_title] :as ep}]
   (let [resp (http/get
                "http://api.rottentomatoes.com/api/public/v1.0/movies.json"
@@ -163,4 +176,22 @@
                :episode_title
                :episode_id])))))))
 
-(update-database)
+(def throttled-nf (throttle-fn get-netflix-from-cisi 1 :second 4))
+
+(defn add-nf-ids []
+  (let [eps (kcore/select episodes
+              (kcore/where {:netflix_id nil
+                            :ignore 0}))]
+    (println (count eps) "still not matched")
+    (doseq [ep eps]
+      (print "Updating" (str (:media_title ep) "..."))
+      (flush)
+      (if-let [nf-id (-> ep :cisi_id throttled-nf)]
+        (do
+          (println " ok")
+          (kcore/update episodes
+            (kcore/set-fields {:netflix_id nf-id})
+            (kcore/where {:episode_id (:episode_id ep)})))
+        (println " FAILED")))))
+
+(add-nf-ids)
