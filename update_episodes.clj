@@ -106,6 +106,7 @@
                                :mediaType "dvd"}
                 :accept :json
                 :as :json})]
+    (pprint resp)
     (some-> resp
             :body
             :netflix_dvd
@@ -153,8 +154,9 @@
               (clojure.set/rename-keys {:title :media_title :id :rt_id})
               (#(assoc % :imdb_id (->> % :alternate_ids :imdb (str "tt"))))
               (#(assoc % :cisi_id (-> % :imdb_id get-cisi-from-imdb)))
+              (#(assoc % :netflix_id (-> % :cisi_id get-netflix-from-cisi)))
               (assoc :ignore 0)
-              (select-keys [:title :media_title :imdb_id :rt_id :cisi_id]))
+              (select-keys [:title :media_title :imdb_id :rt_id :cisi_id :netflix_id]))
         :else nil))))
 
 (defn update-database []
@@ -173,6 +175,9 @@
                :imdb_id
                :rt_id
                :cisi_id
+               :netflix_id
                :episode_title
                :episode_id])))))))
+
+(update-database)
 

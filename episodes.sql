@@ -163,7 +163,6 @@ INSERT INTO "episodes" VALUES('Revenge of the Ninja',166,'tt0086192','15154','4e
 INSERT INTO "episodes" VALUES('Blue Thunder',34,'tt0085255','14364','4eb0c8eef5f8077b0f000000','Film Sack #34: “The one about Blue Thunder”',0,'318960');
 INSERT INTO "episodes" VALUES('Urban Cowboy',252,'tt0081696','10625','4eb0477ff5f807220f00000c','Film Sack 252: Urban Cowboy',0,'60024038');
 INSERT INTO "episodes" VALUES('The Toxic Avenger',146,'tt0090190','17524','5397bea39030fe9e28706c15','Film Sack 146: Toxic Avenger',0,'1059385');
-INSERT INTO "episodes" VALUES('Rocky IV',228,'tt0089927','11576','4eb01efdf5f8070b39000002','Film Sack 228: Rocky IV',0,'916061');
 INSERT INTO "episodes" VALUES('Frogs',125,'tt0068615','11547','4eb08e6ef5f807f279000000','Film Sack 125: Frogs',0,'60002149');
 INSERT INTO "episodes" VALUES('Double Dragon',148,'tt0106761','12140','4eb08c1ef5f807b16d000001','Film Sack 148: Double Dragon',0,NULL);
 INSERT INTO "episodes" VALUES('Howard the Duck',17,'tt0091225','12688','4eb0a739f5f807620c000000','Film Sack #17: “The one about Howard The Duck"',0,'60035964');
@@ -276,4 +275,5 @@ INSERT INTO "episodes" VALUES('The A-Team',223,NULL,NULL,NULL,'Film Sack 223: Th
 INSERT INTO "episodes" VALUES('The Beast with a Million Eyes',213,'tt0048991','770669352','4f07174cf5f8079f68000003','Film Sack 213: The Beast with a Million Eyes',0,'70147261');
 INSERT INTO "episodes" VALUES('Independence Day',149,'tt0116629','11591','4eb015f3f5f8076628000000','Film Sack 149: ID4 COMMENTARY TRACK EDITION!',0,'60000363');
 INSERT INTO "episodes" VALUES('Con Air',140,'tt0118880','13119','4eb04a6bf5f8079133000003','Film Sack 140: CONAIR COMMENTARY TRACK!',0,'1154294');
+INSERT INTO "episodes" VALUES('Rocky IV',228,'tt0089927','11576','4eb01efdf5f8070b39000002','Film Sack 228: Rocky IV',0,'916061');
 COMMIT;
