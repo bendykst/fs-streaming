@@ -48,7 +48,7 @@
           "Episode"
           (for [service streaming-sites] (str " | " service))
           "\n:---"
-          (for [_ streaming-sites] "|:---:")
+          (repeat (count streaming-sites) "|:---:")
           "\n"
           (for [ep eps]
             (list

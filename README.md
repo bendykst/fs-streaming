@@ -14,6 +14,10 @@ file.
 This database contains the IMDB, Rotten Tomatoes, Netflix and CISI ids of each
 episode's film.
 
+If you want to use `update_episodes`, get a Rotten Tomatoes API key and add it
+to your environment variables as `RT_API_KEY`. If you want to use
+`streamable_intl`, get a UNOGS key and add it as `UNOGS_API_KEY`.
+
 ## Usage
 
 To generate a table of streaming movies, run `streamable.clj` or

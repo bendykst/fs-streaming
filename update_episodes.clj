@@ -24,6 +24,10 @@
 
 (def rt-api-key (env :rt-api-key))
 
+(when
+  (nil? rt-api-key)
+  (throw (Exception. "RT API key not found.")))
+
 (defn episode-exists? [id]
   ((complement empty?)
     (kcore/select episodes
@@ -106,7 +110,6 @@
                                :mediaType "dvd"}
                 :accept :json
                 :as :json})]
-    (pprint resp)
     (some-> resp
             :body
             :netflix_dvd
@@ -167,6 +170,9 @@
         movie-ids (doall (map find-ids missing-eps))]
     (doseq [[ep ids] (map list missing-eps movie-ids)]
       (when ids
+        (when
+          (nil? (:netflix_id ids))
+          (println "Warning: Could not find Netflix ID for" (:episode_title ep)))
         (kcore/insert episodes
           (kcore/values
             (select-keys

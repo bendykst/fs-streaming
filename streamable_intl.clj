@@ -20,7 +20,11 @@
 (kdb/defdb db sqll)
 (kcore/defentity episodes)
 
-(def unogs-key (env :unogs-key))
+(def unogs-key (env :unogs-api-key))
+
+(when
+  (nil? unogs-key)
+  (throw (Exception. "UNOGS API key not found.")))
 
 (def countries-of-interest
   #{"GB" "FR" "AU" "CA" "DE" "ZA"})
@@ -62,7 +66,7 @@
           "Episode"
           (for [country countries] (str " | " country))
           "\n:---"
-          (for [_ countries] "|:---:")
+          (repeat (count countries) "|:---:")
           "\n"
           (for [ep eps]
             (list
