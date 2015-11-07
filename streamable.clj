@@ -35,30 +35,43 @@
          set
          (assoc ep :streaming_options))))
 
-(def throttled-options (throttle-fn assoc-streaming-options 1 :second))
+(def throttled-options (throttle-fn assoc-streaming-options 1 :second 4))
 
 (defn format-results [eps]
   (let [streaming-sites (->> eps
                              (mapcat :streaming_options)
                              set
-                             (sort-by #(if (= % "Netflix Instant") "AAA" %)))]
+                             (sort-by #(if (= % "Netflix Instant") "AAA" %)))
+        header-row (list
+                     "Episode"
+                      (for
+                        [site streaming-sites]
+                        (str " | " site))
+                     "\n")
+        interstitial-row (list
+                           (for
+                             [site streaming-sites]
+                             (str " | **" site "**"))
+                           "\n")
+        body-rows (for [ep eps]
+                    (list
+                      (:episode_title ep)
+                      (for [site streaming-sites]
+                        (if
+                          ((:streaming_options ep) site)
+                          "|✓"
+                          "|"))
+                      "\n"))]
     (apply str
       (flatten
         (list
-          "Episode"
-          (for [service streaming-sites] (str " | " service))
-          "\n:---"
+          header-row
+          ":---"
           (repeat (count streaming-sites) "|:---:")
           "\n"
-          (for [ep eps]
-            (list
-              (:episode_title ep)
-              (for [site streaming-sites]
-                (if
-                  ((:streaming_options ep) site)
-                  "|✓"
-                  "|"))
-              "\n")))))))
+          (interpose
+            interstitial-row
+            (partition 20 body-rows)))))))
 
 (let [episode-data (kcore/select episodes
                      (kcore/where {:ignore 0}))]

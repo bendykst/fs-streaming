@@ -49,7 +49,7 @@
              (clojure.set/intersection countries-of-interest)
              (assoc ep :streaming_options))))
 
-(def throttled-options (throttle-fn assoc-streaming-options 1 :second))
+(def throttled-options (throttle-fn assoc-streaming-options 1 :second 3))
 
 (defn format-results [eps]
   (let [countries (->> eps
@@ -59,24 +59,37 @@
                          #(condp = %
                             "CA" "AAA"
                             "GB" "AAB"
-                            %)))]
+                            %)))
+        header-row (list
+                     "Episode"
+                      (for
+                        [country countries]
+                        (str " | " country))
+                     "\n")
+        interstitial-row (list
+                           (for
+                             [country countries]
+                             (str " | **" country "**"))
+                           "\n")
+        body-rows (for [ep eps]
+                    (list
+                      (:episode_title ep)
+                      (for [country countries]
+                        (if
+                          ((:streaming_options ep) country)
+                          "|✓"
+                          "|"))
+                      "\n"))]
     (apply str
       (flatten
         (list
-          "Episode"
-          (for [country countries] (str " | " country))
-          "\n:---"
+          header-row
+          ":---"
           (repeat (count countries) "|:---:")
           "\n"
-          (for [ep eps]
-            (list
-              (:episode_title ep)
-              (for [country countries]
-                (if
-                  ((:streaming_options ep) country)
-                  "|✓"
-                  "|"))
-              "\n")))))))
+          (interpose
+            interstitial-row
+            (partition 20 body-rows)))))))
 
 (let [episode-data (kcore/select episodes
                      (kcore/where {:ignore 0}))]
