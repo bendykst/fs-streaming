@@ -276,4 +276,6 @@ INSERT INTO "episodes" VALUES('The Beast with a Million Eyes',213,'tt0048991','7
 INSERT INTO "episodes" VALUES('Independence Day',149,'tt0116629','11591','4eb015f3f5f8076628000000','Film Sack 149: ID4 COMMENTARY TRACK EDITION!',0,'60000363');
 INSERT INTO "episodes" VALUES('Con Air',140,'tt0118880','13119','4eb04a6bf5f8079133000003','Film Sack 140: CONAIR COMMENTARY TRACK!',0,'1154294');
 INSERT INTO "episodes" VALUES('Rocky IV',228,'tt0089927','11576','4eb01efdf5f8070b39000002','Film Sack 228: Rocky IV',0,'916061');
+INSERT INTO "episodes" VALUES('Live of S1E6 of AirWolf',267,NULL,NULL,NULL,'Film Sack 267: Live Commentary Track of S1E6 of AirWolf',1,NULL);
+INSERT INTO "episodes" VALUES('Heathers',268,'tt0097493','15577','4ea1a8e6f5f8073553000001','Film Sack 268: Heathers',0,'580335');
 COMMIT;
