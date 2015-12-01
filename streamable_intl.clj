@@ -77,7 +77,7 @@
                       (for [country countries]
                         (if
                           ((:streaming_options ep) country)
-                          "|✓"
+                          (str "|" country)
                           "|"))
                       "\n"))]
     (apply str
@@ -87,9 +87,7 @@
           ":---"
           (repeat (count countries) "|:---:")
           "\n"
-          (interpose
-            interstitial-row
-            (partition 20 body-rows)))))))
+          body-rows)))))
 
 (let [episode-data (kcore/select episodes
                      (kcore/where {:ignore 0}))]
