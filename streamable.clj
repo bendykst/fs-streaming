@@ -18,6 +18,15 @@
 (kdb/defdb db sqll)
 (kcore/defentity episodes)
 
+(def service-aliases
+  {"Netflix Instant" "NFLX"
+   "Amazon Prime Instant" "AMZN"
+   "Epix" "EPIX"
+   "Fandor" "FNDR"
+   "Hulu Plus" "HULU"
+   "Snagfilms" "SNAG"
+   "XFINITY Streampix" "XFTY"})
+
 (defn assoc-streaming-options [ep]
   (println "Getting options for" (:media_title ep))
   (flush)
@@ -32,6 +41,7 @@
          :body
          vals
          (map :friendlyName)
+         (map #(or (service-aliases %) %))
          set
          (assoc ep :streaming_options))))
 
