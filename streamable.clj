@@ -21,6 +21,7 @@
 (def service-aliases
   {"Netflix Instant" "NFLX"
    "Amazon Prime Instant" "AMZN"
+   "Crackle" "CRKL"
    "Epix" "EPIX"
    "Fandor" "FNDR"
    "Hulu Plus" "HULU"
@@ -51,7 +52,13 @@
   (let [streaming-sites (->> eps
                              (mapcat :streaming_options)
                              set
-                             (sort-by #(if (= % "Netflix Instant") "AAA" %)))
+                             (remove #{"SNAG" "FNDR"})
+                             (sort-by
+                               #(condp = %
+                                  "NFLX" "AAA"
+                                  "HULU" "AAB"
+                                  "AMZN" "AAC"
+                                  %)))
         header-row (list
                      "Episode"
                       (for
@@ -69,7 +76,7 @@
                       (for [site streaming-sites]
                         (if
                           ((:streaming_options ep) site)
-                          "|✓"
+                          (str "|**" site "**")
                           "|"))
                       "\n"))]
     (apply str
@@ -79,9 +86,7 @@
           ":---"
           (repeat (count streaming-sites) "|:---:")
           "\n"
-          (interpose
-            interstitial-row
-            (partition 20 body-rows)))))))
+          body-rows)))))
 
 (let [episode-data (kcore/select episodes
                      (kcore/where {:ignore 0}))]

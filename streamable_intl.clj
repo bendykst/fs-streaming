@@ -66,18 +66,13 @@
                         [country countries]
                         (str " | " country))
                      "\n")
-        interstitial-row (list
-                           (for
-                             [country countries]
-                             (str " | **" country "**"))
-                           "\n")
         body-rows (for [ep eps]
                     (list
                       (:episode_title ep)
                       (for [country countries]
                         (if
                           ((:streaming_options ep) country)
-                          (str "|" country)
+                          (str "|**" country "**")
                           "|"))
                       "\n"))]
     (apply str
