@@ -278,4 +278,6 @@ INSERT INTO "episodes" VALUES('Con Air',140,'tt0118880','13119','4eb04a6bf5f8079
 INSERT INTO "episodes" VALUES('Rocky IV',228,'tt0089927','11576','4eb01efdf5f8070b39000002','Film Sack 228: Rocky IV',0,'916061');
 INSERT INTO "episodes" VALUES('Live of S1E6 of AirWolf',267,NULL,NULL,NULL,'Film Sack 267: Live Commentary Track of S1E6 of AirWolf',1,NULL);
 INSERT INTO "episodes" VALUES('Heathers',268,'tt0097493','15577','4ea1a8e6f5f8073553000001','Film Sack 268: Heathers',0,'580335');
+INSERT INTO "episodes" VALUES('No Holds Barred',271,'tt0097987','168454941','4eb2204cf5f8079a37000001','Film Sack 271: No Holds Barred',0,'70300085');
+INSERT INTO "episodes" VALUES('First Blood',270,'tt0083944','16521','4eb01244f5f807df1f000001','Film Sack 270: First Blood',0,'70017963');
 COMMIT;
