@@ -65,11 +65,6 @@
                         [site streaming-sites]
                         (str " | " site))
                      "\n")
-        interstitial-row (list
-                           (for
-                             [site streaming-sites]
-                             (str " | **" site "**"))
-                           "\n")
         body-rows (for [ep eps]
                     (list
                       (:episode_title ep)
