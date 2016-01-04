@@ -87,7 +87,7 @@
                      (kcore/where {:ignore 0}))]
   (->> episode-data
        (map throttled-options)
-       (remove (comp empty? :streaming_options))
+       (filter (comp #(some #{"AMZN" "HULU" "NFLX"} %) :streaming_options))
        (sort-by :episode_id)
        format-results
        print))
