@@ -280,4 +280,10 @@ INSERT INTO "episodes" VALUES('Live of S1E6 of AirWolf',267,NULL,NULL,NULL,'Film
 INSERT INTO "episodes" VALUES('Heathers',268,'tt0097493','15577','4ea1a8e6f5f8073553000001','Film Sack 268: Heathers',0,'580335');
 INSERT INTO "episodes" VALUES('No Holds Barred',271,'tt0097987','168454941','4eb2204cf5f8079a37000001','Film Sack 271: No Holds Barred',0,'70300085');
 INSERT INTO "episodes" VALUES('First Blood',270,'tt0083944','16521','4eb01244f5f807df1f000001','Film Sack 270: First Blood',0,'70017963');
+INSERT INTO "episodes" VALUES('The Kungfu Panda 3 Writers Special',276,NULL,NULL,NULL,'Film Sack 276: The Kungfu Panda 3 Writers Special!',1,NULL);
+INSERT INTO "episodes" VALUES('Star Wars Episode 7',272,NULL,NULL,NULL,'Film Sack 272: Star Wars Episode 7',1,NULL);
+INSERT INTO "episodes" VALUES('The Terminator',277,'tt0088247','16340','4eb01f4af5f807093900000a','Film Sack 277: The Terminator',0,'1032625');
+INSERT INTO "episodes" VALUES('Angel Heart',275,'tt0092563','13312','4eb049e5f5f8079433000006','Film Sack 275: Angel Heart',0,'60029359');
+INSERT INTO "episodes" VALUES('Bad Boys II',274,'tt0172156','13355','4eb03289f5f807a356000005','Film Sack 274: Bad Boys II',0,'60029167');
+INSERT INTO "episodes" VALUES('Wing Commander',273,'tt0131646','11724','4eb09ed2f5f8073061000000','Film Sack 273: Wing Commander',0,'18962475');
 COMMIT;
