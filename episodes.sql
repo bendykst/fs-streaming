@@ -286,4 +286,7 @@ INSERT INTO "episodes" VALUES('The Terminator',277,'tt0088247','16340','4eb01f4a
 INSERT INTO "episodes" VALUES('Angel Heart',275,'tt0092563','13312','4eb049e5f5f8079433000006','Film Sack 275: Angel Heart',0,'60029359');
 INSERT INTO "episodes" VALUES('Bad Boys II',274,'tt0172156','13355','4eb03289f5f807a356000005','Film Sack 274: Bad Boys II',0,'60029167');
 INSERT INTO "episodes" VALUES('Wing Commander',273,'tt0131646','11724','4eb09ed2f5f8073061000000','Film Sack 273: Wing Commander',0,'18962475');
+INSERT INTO "episodes" VALUES('Battlestar Galactica ep 22 (70s)',278,NULL,NULL,NULL,'Film Sack 278: Battlestar Galactica ep 22 (70s) Commentary Track!',1,NULL);
+INSERT INTO "episodes" VALUES('Armageddon',280,'tt0120591','17022','4eb02db0f5f8073c51000008','Film Sack 280: Armageddon',0,'5670317');
+INSERT INTO "episodes" VALUES('Blow Dry',279,'tt0212380','14052','4eb05955f5f807d578000001','Film Sack 279: Blow Dry',0,'60001825');
 COMMIT;
