@@ -289,4 +289,8 @@ INSERT INTO "episodes" VALUES('Wing Commander',273,'tt0131646','11724','4eb09ed2
 INSERT INTO "episodes" VALUES('Battlestar Galactica ep 22 (70s)',278,NULL,NULL,NULL,'Film Sack 278: Battlestar Galactica ep 22 (70s) Commentary Track!',1,NULL);
 INSERT INTO "episodes" VALUES('Armageddon',280,'tt0120591','17022','4eb02db0f5f8073c51000008','Film Sack 280: Armageddon',0,'5670317');
 INSERT INTO "episodes" VALUES('Blow Dry',279,'tt0212380','14052','4eb05955f5f807d578000001','Film Sack 279: Blow Dry',0,'60001825');
+INSERT INTO "episodes" VALUES('Star Trek The Animated Series Watch-Along',283,NULL,NULL,NULL,'Film Sack 283: Star Trek The Animated Series Watch-Along',1,NULL);
+INSERT INTO "episodes" VALUES('Incredible Hulk TV Watch-Along',282,NULL,NULL,NULL,'Film Sack 282: Incredible Hulk TV Watch-Along',1,NULL);
+INSERT INTO "episodes" VALUES('Eraser',284,'tt0116213','13738','4ede40f6f5f8074852000012','Film Sack 284: Eraser',0,'478675');
+INSERT INTO "episodes" VALUES('Constantine',281,'tt0360486','12977','4eb04576f5f807f606000000','Film Sack 281: Constantine',0,'70019508');
 COMMIT;
