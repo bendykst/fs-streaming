@@ -31,20 +31,27 @@
 (defn assoc-streaming-options [ep]
   (println "Getting options for" (:media_title ep))
   (flush)
-  (let [resp (http/get
-               "http://www.canistream.it/services/query"
-               {:query-params {:movieId (:cisi_id ep)
-                               :attributes true
-                               :mediaType "streaming"}
-                :accept :json
-                :as :json})]
-    (->> resp
-         :body
-         vals
-         (map :friendlyName)
-         (map #(or (service-aliases %) %))
-         set
-         (assoc ep :streaming_options))))
+  (let [resp
+        (try
+          (http/get
+                 "http://www.canistream.it/services/query"
+                 {:query-params {:movieId (:cisi_id ep)
+                                 :attributes true
+                                 :mediaType "streaming"}
+                  :accept :json
+                  :as :json})
+          (catch Exception e
+            (println "Request failed")))]
+    (if
+     (nil? resp)
+      (assoc ep :streaming_options [])
+      (->> resp
+           :body
+           vals
+           (map :friendlyName)
+           (map #(or (service-aliases %) %))
+           set
+           (assoc ep :streaming_options)))))
 
 (def throttled-options (throttle-fn assoc-streaming-options 1 :second 4))
 
