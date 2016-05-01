@@ -293,4 +293,8 @@ INSERT INTO "episodes" VALUES('Star Trek The Animated Series Watch-Along',283,NU
 INSERT INTO "episodes" VALUES('Incredible Hulk TV Watch-Along',282,NULL,NULL,NULL,'Film Sack 282: Incredible Hulk TV Watch-Along',1,NULL);
 INSERT INTO "episodes" VALUES('Eraser',284,'tt0116213','13738','4ede40f6f5f8074852000012','Film Sack 284: Eraser',0,'478675');
 INSERT INTO "episodes" VALUES('Constantine',281,'tt0360486','12977','4eb04576f5f807f606000000','Film Sack 281: Constantine',0,'70019508');
+INSERT INTO "episodes" VALUES('Contact',288,'tt0118884','10172','4eb02d7ef5f8073b51000000','Film Sack 288: Contact',0,'1171788');
+INSERT INTO "episodes" VALUES('Blade Runner',287,'tt0083658','12886','4edd9f42f5f807e21d0000c8','Film Sack 287: Blade Runner',0,'70086446');
+INSERT INTO "episodes" VALUES('Aeon Flux',285,'tt0402022','23089','4eb0be91f5f8079a6b000002','Film Sack 285: Aeon Flux',0,'70045919');
+INSERT INTO "episodes" VALUES('The Saint',286,'tt0120053','10410','4eb018ebf5f807aa2a000008','Film Sack 286: The Saint',0,'1153194');
 COMMIT;
