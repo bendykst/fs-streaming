@@ -297,4 +297,7 @@ INSERT INTO "episodes" VALUES('Contact',288,'tt0118884','10172','4eb02d7ef5f8073
 INSERT INTO "episodes" VALUES('Blade Runner',287,'tt0083658','12886','4edd9f42f5f807e21d0000c8','Film Sack 287: Blade Runner',0,'70086446');
 INSERT INTO "episodes" VALUES('Aeon Flux',285,'tt0402022','23089','4eb0be91f5f8079a6b000002','Film Sack 285: Aeon Flux',0,'70045919');
 INSERT INTO "episodes" VALUES('The Saint',286,'tt0120053','10410','4eb018ebf5f807aa2a000008','Film Sack 286: The Saint',0,'1153194');
+INSERT INTO "episodes" VALUES('Teen Witch',291,'tt0098453','10069','4eb07150f5f807a86d000000','Film Sack 291: Teen Witch',0,'70033285');
+INSERT INTO "episodes" VALUES('2 Fast 2 Furious',290,'tt0322259','10591','4eb01337f5f8074022000000','Film Sack 290: 2 Fast 2 Furious',0,'60027713');
+INSERT INTO "episodes" VALUES('Sphere',289,'tt0120184','11101','4eb09061f5f8073712000000','Film Sack 289: Sphere',0,'8178227');
 COMMIT;
