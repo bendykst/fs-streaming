@@ -304,4 +304,9 @@ INSERT INTO "episodes" VALUES(': The Naked Time',293,NULL,NULL,NULL,'Film Sack 2
 INSERT INTO "episodes" VALUES('E.T. The Extra-Terrestrial',295,'tt0083866','10489','4eb01fa5f5f8078b39000003','Film Sack 295: E.T.',0,'60022398');
 INSERT INTO "episodes" VALUES('The Da Vinci Code',294,'tt0382625','155654983','4eb02337f5f807e43e00000e','Film Sack 294: The Da Vinci Code',0,'70035186');
 INSERT INTO "episodes" VALUES('The Phantom',292,'tt0117331','10944','4eeceb64f5f8071e6b000020','Film Sack 292: The Phantom',0,'853966');
+INSERT INTO "episodes" VALUES('Twilight Zone Special',297,NULL,NULL,NULL,'Film Sack 297: Twilight Zone Commentary Track Special',1,NULL);
+INSERT INTO "episodes" VALUES('300',300,'tt0416449','344023668','4eb0217ff5f8072f3e000000','Film Sack 300: 300',0,'70056440');
+INSERT INTO "episodes" VALUES('Fantastic Four',299,'tt0120667','1790','4eb13602f5f8075037000000','Film Sack 299: Fantastic Four (2005)',0,'70021645');
+INSERT INTO "episodes" VALUES('Cujo',298,'tt0085382','15294','4eb059c4f5f807ce7b000000','Film Sack 298: Cujo',0,'60001274');
+INSERT INTO "episodes" VALUES('Sahara',296,'tt0318649','20','4eb087e2f5f8075a4a000008','Film Sack 296: Sahara',0,'70000199');
 COMMIT;
