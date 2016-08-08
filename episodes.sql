@@ -300,4 +300,8 @@ INSERT INTO "episodes" VALUES('The Saint',286,'tt0120053','10410','4eb018ebf5f80
 INSERT INTO "episodes" VALUES('Teen Witch',291,'tt0098453','10069','4eb07150f5f807a86d000000','Film Sack 291: Teen Witch',0,'70033285');
 INSERT INTO "episodes" VALUES('2 Fast 2 Furious',290,'tt0322259','10591','4eb01337f5f8074022000000','Film Sack 290: 2 Fast 2 Furious',0,'60027713');
 INSERT INTO "episodes" VALUES('Sphere',289,'tt0120184','11101','4eb09061f5f8073712000000','Film Sack 289: Sphere',0,'8178227');
+INSERT INTO "episodes" VALUES(': The Naked Time',293,NULL,NULL,NULL,'Film Sack 293: COMMENTARY track: The Naked Time',1,NULL);
+INSERT INTO "episodes" VALUES('E.T. The Extra-Terrestrial',295,'tt0083866','10489','4eb01fa5f5f8078b39000003','Film Sack 295: E.T.',0,'60022398');
+INSERT INTO "episodes" VALUES('The Da Vinci Code',294,'tt0382625','155654983','4eb02337f5f807e43e00000e','Film Sack 294: The Da Vinci Code',0,'70035186');
+INSERT INTO "episodes" VALUES('The Phantom',292,'tt0117331','10944','4eeceb64f5f8071e6b000020','Film Sack 292: The Phantom',0,'853966');
 COMMIT;
