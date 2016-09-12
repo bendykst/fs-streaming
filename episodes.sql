@@ -309,4 +309,7 @@ INSERT INTO "episodes" VALUES('300',300,'tt0416449','344023668','4eb0217ff5f8072
 INSERT INTO "episodes" VALUES('Fantastic Four',299,'tt0120667','1790','4eb13602f5f8075037000000','Film Sack 299: Fantastic Four (2005)',0,'70021645');
 INSERT INTO "episodes" VALUES('Cujo',298,'tt0085382','15294','4eb059c4f5f807ce7b000000','Film Sack 298: Cujo',0,'60001274');
 INSERT INTO "episodes" VALUES('Sahara',296,'tt0318649','20','4eb087e2f5f8075a4a000008','Film Sack 296: Sahara',0,'70000199');
+INSERT INTO "episodes" VALUES('- Hercules',303,NULL,NULL,NULL,'Film Sack 303: Commentary Track - Hercules!',1,NULL);
+INSERT INTO "episodes" VALUES('Twilight Zone S5 E3',301,NULL,NULL,NULL,'Film Sack 301: Twilight Zone S5 E3 Commentary Track',1,NULL);
+INSERT INTO "episodes" VALUES('Blade II',302,'tt','13362','4e6e8e36f5f8076c7e000004','Film Sack 302: Blade II',0,'60022707');
 COMMIT;
